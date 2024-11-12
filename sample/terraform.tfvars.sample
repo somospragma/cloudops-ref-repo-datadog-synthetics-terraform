@@ -1,0 +1,48 @@
+synthetics_config = [
+  {
+    name                         = "Uptime-com-co"
+    url                          = "https://www.pragma.com.co"
+    type                         = "api"
+    subtype                      = "http"
+    status                       = "live"
+    notification_channel         = "@hangouts-Notifications-Pragma"
+    locations                    = ["aws:us-east-1"]
+    tags                         = ["service:service1", "env:reference"]
+    method                       = "GET"
+    request_headers_content_type = "application/json"
+    assertions = [
+      {
+        type     = "statusCode"
+        operator = "is"
+        target   = "301"
+      }
+    ]
+    tick_every                = 600
+    retry_count               = 1
+    retry_interval            = 300
+    monitor_renotify_interval = 120
+  },
+    {
+    name                         = "Uptime-co"
+    url                          = "https://www.pragma.co"
+    type                         = "api"
+    subtype                      = "http"
+    status                       = "live"
+    notification_channel         = "@hangouts-Notifications-Pragma"
+    locations                    = ["aws:us-east-2"]
+    tags                         = ["service:service1", "env:reference"]
+    method                       = "GET"
+    request_headers_content_type = "application/json"
+    assertions = [
+      {
+        type     = "statusCode"
+        operator = "is"
+        target   = "301"
+      }
+    ]
+    tick_every                = 600
+    retry_count               = 2
+    retry_interval            = 300
+    monitor_renotify_interval = 120
+  }
+]
