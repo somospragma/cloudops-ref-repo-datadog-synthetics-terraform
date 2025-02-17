@@ -42,3 +42,127 @@ cloudops-ref-repo-aws-vpc-terraform/
 - Los archivos principales del módulo (`data.tf`, `main.tf`, `outputs.tf`, `variables.tf`, `providers.tf`) se encuentran en el directorio raíz.
 - `CHANGELOG.md` y `README.md` también están en el directorio raíz para fácil acceso.
 - La carpeta `sample/` contiene un ejemplo de implementación del módulo.
+
+## Seguridad & Cumplimiento
+ 
+Consulta a continuación la fecha y los resultados de nuestro escaneo de seguridad y cumplimiento.
+
+<!-- BEGIN_BENCHMARK_TABLE -->
+| Benchmark | Date | Version | Description | 
+| --------- | ---- | ------- | ----------- | 
+| ![checkov](https://img.shields.io/badge/checkov-passed-green) | 2023-09-20 | 3.2.232 | Escaneo profundo del plan de Terraform en busca de problemas de seguridad y cumplimiento |
+<!-- END_BENCHMARK_TABLE -->
+
+```hcl
+sample/providers.tf
+provider "datadog" {
+  alias = "principal"
+  # ... otras configuraciones del provider
+}
+
+sample/synthetics/main.tf
+module "synthetics" {
+  source = ""
+  providers = {
+    datadog.project = aws.principal
+  }
+  # ... resto de la configuración
+}
+```
+
+## Uso del Módulo:
+
+```hcl
+module "synthetics" {
+  source = ""
+  
+  providers = {
+    datadog.principal = datadog.principal
+  }
+
+  # Common configuration 
+  project                   = observability
+  environment               = dev
+  datadog_app_key           = "xxxxxxxxxxxxxxxxxxxxxxxx"
+  datadog_api_key           = "xxxxxxxxxxxxxxxxxxxxxxxx"
+  datadog_api_url           = "https://api.datadoghq.com/"
+  client                    = Pragma
+  common_tags = {
+    environment   = "dev"
+    project-name  = "proyecto01"
+    cost-center   = "xxxxxx"
+    owner         = "xxxxxx"
+    area          = "xxxxxx"
+    provisioned   = "xxxxxx"
+    datatype      = "xxxxxx"
+  }
+
+    synthetics_browser_config = [
+      {
+        name       = "xxxxxx"
+        type       = "xxxxxx"
+        status     = "xxxxxx"
+        message    = "xxxxxx"
+        device_ids = ["xxxxxx"] 
+        locations  = ["xxxxxx","xxxxxx","xxxxxx"]
+        tags       = []
+    
+        request_definition = {
+          method = "xxxxxx"
+          url    = "xxxxxx"
+        }
+    
+        browser_step = {
+          {
+            name = "xxxxxx"
+            type = "xxxxxx"
+            params = [
+              {
+                check = "xxxxxx"
+                value = "xxxxxx"
+              }
+            ]      
+          }
+        }
+        browser_variable = {
+          {
+            type    = "xxxxxx"
+            id      = "xxxxxx"
+            name    = "xxxxxx"
+            pattern = "xxxxxx"
+            secure  = "xxxxxx"
+          },
+          {
+            type    = "xxxxxx"
+            id      = "xxxxxx"
+            name    = "xxxxxx"
+            pattern = "xxxxxx"
+            secure  = "xxxxxx"
+          }
+        }
+        options_list = {
+          tick_every = "xxxxxx"
+        }
+      }
+    ]
+}
+```
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0 |
+| <a name="requirement_datadog"></a> [aws](#requirement\_datadog) | >= 5.0 |
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_datadog"></a> [aws](#requirement\_datadog) | >= 5.0 |
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [datadog_synthetics_global_variable](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/synthetics_global_variable) | resource |
+| [datadog_synthetics_test](https://registry.terraform.io/providers/DataDog/datadog/latest/docs/resources/synthetics_test) | resource |
