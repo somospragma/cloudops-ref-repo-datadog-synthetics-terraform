@@ -1,48 +1,50 @@
-synthetics_config = [
+synthetics_browser_config = [
   {
-    name                         = "Uptime-com-co"
-    url                          = "https://www.pragma.com.co"
-    type                         = "api"
-    subtype                      = "http"
-    status                       = "live"
-    notification_channel         = "@hangouts-Notifications-Pragma"
-    locations                    = ["aws:us-east-1"]
-    tags                         = ["service:service1", "env:reference"]
-    method                       = "GET"
-    request_headers_content_type = "application/json"
-    assertions = [
+    name       = "Browser-Test-On-example.org"
+    type       = "browser"
+    status     = "live"
+    message    = "Notify @qa" ## Cambiar
+    device_ids = ["laptop_large"] ## depende de la eleccion del cliente
+    locations  = ["aws:us-east-1"] ## validar con cliente desde que region requieren realizar las pruebas
+    tags       = []
+
+    request_definition = {
+      method = "GET"
+      url    = "https://www.example.org"
+    }
+
+    browser_step = [
       {
-        type     = "statusCode"
-        operator = "is"
-        target   = "301"
+        name = "Check current url"
+        type = "assertCurrentUrl"
+        params = [
+          {
+            check = "contains"
+            value = "datadoghq"
+          }
+        ]      
       }
     ]
-    tick_every                = 600
-    retry_count               = 1
-    retry_interval            = 300
-    monitor_renotify_interval = 120
-  },
-    {
-    name                         = "Uptime-co"
-    url                          = "https://www.pragma.co"
-    type                         = "api"
-    subtype                      = "http"
-    status                       = "live"
-    notification_channel         = "@hangouts-Notifications-Pragma"
-    locations                    = ["aws:us-east-2"]
-    tags                         = ["service:service1", "env:reference"]
-    method                       = "GET"
-    request_headers_content_type = "application/json"
-    assertions = [
+    browser_variable = [
+      ## cuando las variables son de tipo globales, estas ya deben estar creadas en nuestro datadog
+      ## https://app.datadoghq.com/synthetics/settings/variables
       {
-        type     = "statusCode"
-        operator = "is"
-        target   = "301"
+        type    = "global"
+        id      = "a197c115-e214-4xx6-axx2-xxxxxx" ## Estos valores son traidos de variables previamente creadas en Datadog
+        name    = "USER_PASSWORD"
+        pattern = "{{ uuid }}"
+        secure  = true
+      },
+      {
+        type    = "global"
+        id      = "f5039423-89b8-44xx6-axx2-xxxxxx"
+        name    = "USER_MAIL"
+        pattern = "{{ uuid }}"
+        secure  = false
       }
     ]
-    tick_every                = 600
-    retry_count               = 2
-    retry_interval            = 300
-    monitor_renotify_interval = 120
+    options_list = {
+      tick_every = 3600
+    }
   }
 ]
