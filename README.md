@@ -1,23 +1,24 @@
 # Módulo Terraform: cloudops-ref-repo-datadog-synthetics-terraform
 
 ## Descripción:
-Este módulo permite configurar y gestionar pruebas sintéticas en Datadog mediante Terraform, facilitando la creación y mantenimiento de monitoreos automatizados para evaluar la disponibilidad y el rendimiento de aplicaciones y servicios. Ideal para implementar monitoreo preventivo que detecte problemas antes de impactar al usuario final.
+Este módulo permite configurar y gestionar Browser Tests sintéticos en Datadog mediante Terraform, facilitando la creación y mantenimiento de monitoreos automatizados para evaluar la experiencia del usuario final en aplicaciones web. Ideal para implementar monitoreo preventivo que detecte errores en flujos críticos antes de que impacten a los usuarios.
 
-- Crear pruebas de disponibilidad: Configura y programa pruebas HTTP, TCP, o de URL para monitorear la disponibilidad de endpoints específicos, verificando que estén activos y respondan como se espera.
+- Crear pruebas de navegación en navegador: Configura pruebas multipasos que simulan el recorrido real de un usuario en una aplicación web, permitiendo detectar errores funcionales y problemas de rendimiento en interfaces críticas.
 
-- Definir alertas personalizadas: Configura umbrales de alertas para recibir notificaciones en caso de falla o lentitud en las pruebas. Esto permite una respuesta rápida ante problemas de rendimiento o disponibilidad.
+- Definir alertas personalizadas: Establece umbrales de falla (por ejemplo, si un paso falla o una página tarda demasiado en cargar) para activar notificaciones automáticas. Esto facilita respuestas rápidas ante caídas o regresiones en la experiencia del usuario.
 
-- Automatizar pruebas de navegación: Realiza pruebas en varios pasos que simulan la experiencia del usuario en una aplicación web. Ideal para monitorear aplicaciones críticas de negocio.
+- Automatizar validaciones de funcionalidades clave: Valida la correcta carga de elementos, flujos de login, formularios, búsquedas y otras funcionalidades esenciales en tus aplicaciones desde el punto de vista del navegador.
 
-- Configurar frecuencia de pruebas: Permite definir la frecuencia con la que se ejecutarán las pruebas (por ejemplo, cada minuto o cada hora), ajustando el monitoreo según las necesidades del negocio.
+- Configurar frecuencia de ejecución: Permite definir cada cuánto se ejecutan las pruebas (por ejemplo, cada 5 minutos), ajustándose al nivel de criticidad del flujo monitorizado.
 
-- Personalizar ubicaciones de prueba: Selecciona ubicaciones globales o puntos específicos desde donde se ejecutarán las pruebas para simular la experiencia del usuario desde diversas ubicaciones.
+- Personalizar ubicaciones de prueba: Selecciona ubicaciones de puntos de presencia globales para simular cómo se comporta tu aplicación desde distintas geografías.
 
-- Integración con otros sistemas de notificación: Configura notificaciones a través de canales de Slack, correo electrónico, o webhook cuando se detecten errores en las pruebas.
+- Integración con sistemas de notificación: Las alertas generadas por fallas en las pruebas pueden ser enviadas automáticamente a canales como Slack, correo electrónico o webhooks.
 
-- Documentación de resultados y métricas de pruebas: Genera y almacena automáticamente informes de cada prueba, incluyendo detalles de latencia, tiempos de respuesta y errores encontrados.
+- Documentación de resultados y métricas: Cada prueba ejecutada genera un historial detallado con capturas, tiempos de carga por paso, errores encontrados, y comparativas de desempeño a lo largo del tiempo.
 
-Consulta CHANGELOG.md para la lista de cambios de cada versión. *Recomendamos encarecidamente que en tu código fijes la versión exacta que estás utilizando para que tu infraestructura permanezca estable y actualices las versiones de manera sistemática para evitar sorpresas.*
+Consulta el archivo CHANGELOG.md para conocer los cambios por versión.
+Recomendamos fijar explícitamente la versión del módulo en tu código para garantizar estabilidad y facilitar actualizaciones controladas.
 
 ## Estructura del Módulo
 El módulo cuenta con la siguiente estructura:
@@ -39,6 +40,6 @@ cloudops-ref-repo-aws-vpc-terraform/
     └── variables.tf
 ```
 
-- Los archivos principales del módulo (`data.tf`, `main.tf`, `outputs.tf`, `variables.tf`, `providers.tf`) se encuentran en el directorio raíz.
-- `CHANGELOG.md` y `README.md` también están en el directorio raíz para fácil acceso.
-- La carpeta `sample/` contiene un ejemplo de implementación del módulo.
+- Los archivos principales del módulo (data.tf, main.tf, outputs.tf, variables.tf, providers.tf) se encuentran en el directorio raíz.
+- CHANGELOG.md y README.md también están en el directorio raíz para fácil acceso.
+- La carpeta sample/ contiene un ejemplo funcional para implementar una prueba de tipo Browser Test usando este módulo.
